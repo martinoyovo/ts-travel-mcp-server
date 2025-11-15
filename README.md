@@ -73,13 +73,7 @@ travel-mcp-server/
     │   └── MockEmailModal.jsx # Email confirmation modal
     │
     ├── index.html            # HTML entry point
-    ├── vite.config.js        # Vite build configuration
-    │
-    └── web/                  # Alternative web UI setup (optional)
-        ├── src/
-        │   ├── components/   # React components
-        │   └── data.js       # Data utilities
-        └── vite.config.js
+    └── vite.config.js        # Vite build configuration
 ```
 
 ## Getting Started
@@ -117,10 +111,14 @@ You have three options (choose what fits your needs):
 #### Quick Start: Web App Only
 Perfect for learning and demos - no AI client setup needed!
 
+**Terminal 1: Start API Server**
 ```bash
-cd web
-npm install
-npm run dev
+npm run api
+```
+
+**Terminal 2: Start Web App**
+```bash
+npm run dev:web
 ```
 
 Opens at `http://localhost:3000` - you're ready to go!
@@ -147,9 +145,7 @@ npm start
 
 **Terminal 2: Web App**
 ```bash
-cd web
-npm install
-npm run dev
+npm run dev:web
 ```
 
 **Terminal 3: AI Client**
@@ -307,7 +303,7 @@ This is the **key teaching moment** - demonstrating real backend state managemen
 | Install dependencies | `npm install` |
 | Build backend | `npm run build` |
 | Start MCP server | `npm start` |
-| Run web app | `cd web && npm run dev` |
+| Run web app | `npm run dev:web` |
 | View docs | Open [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md) |
 
 ---

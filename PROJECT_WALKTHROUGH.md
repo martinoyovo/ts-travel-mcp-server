@@ -99,13 +99,7 @@ travel-mcp-server/
     │   └── MockEmailModal.jsx # Email confirmation modal
     │
     ├── index.html            # HTML entry point
-    ├── vite.config.js        # Vite build configuration
-    │
-    └── web/                  # Alternative web UI setup (optional)
-        ├── src/
-        │   ├── components/   # React components
-        │   └── data.js       # Data utilities
-        └── vite.config.js
+    └── vite.config.js        # Vite build configuration
 ```
 
 ## Creating MCP Tools
