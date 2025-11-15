@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "travel": {
+      "command": "node",
+      "args": [
+        "/Users/martinoyovo/Documents/travel-mcp-server/dist/index.js"
+      ]
+    }
+  }
+}
