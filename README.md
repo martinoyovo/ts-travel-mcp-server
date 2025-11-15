@@ -1,65 +1,44 @@
-# Travel MCP Server (TS)
+# Quick Start Guide
 
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Tools and Technologies](#tools-and-technologies)
-3. [Project Structure](#project-structure)
-4. [Creating MCP Tools](#creating-mcp-tools)
-5. [API Functions and Business Logic](#api-functions-and-business-logic)
-6. [Linking Functions Together](#linking-functions-together)
-7. [MCP with Stdio Implementation](#mcp-with-stdio-implementation)
-8. [Integrating with AI Clients](#integrating-with-ai-clients)
+> **New to MCP?** Start here! This guide gets you up and running in minutes.  
+> For detailed documentation, see [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md).
 
-## Project Overview
+## What We're Building
 
-**Travel MCP Server** is a Model Context Protocol (MCP) server that provides flight search and booking capabilities to AI assistants like Claude, Gemini, and Codex. It enables AI clients to search for flights, book tickets, manage bookings, and send confirmation emails through a standardized protocol.
+A **complete full-stack travel booking application** with:
 
-### What is MCP?
-Model Context Protocol (MCP) is a standardized way for AI assistants to interact with external tools and data sources. It allows AI models to:
-- Access real-time data
-- Perform actions on behalf of users
-- Integrate with external systems
-- Maintain conversation context
+### 🎯 Backend (MCP Server)
+- TypeScript MCP server with 8 tools
+- Mock flight database with real-time state
+- Booking system with state persistence
+- Multi-client support (Claude, Codex, Gemini)
 
-### Key Features
-- 🔍 **Flight Search**: Search flights between cities with sorting options
-- 💰 **Cheapest Flight Finder**: Get the best deals automatically
-- ✈️ **Flight Booking**: Book flights with passenger information
-- 📋 **Booking Management**: View, manage, and cancel bookings
-- 📧 **Email Confirmations**: Send booking confirmation emails
-- 🔄 **State Management**: Maintains booking state across sessions
+### 🎨 Frontend (Web App)
+- Beautiful React UI with modern design
+- Flight search interface
+- Booking management dashboard
+- Email confirmation preview
+- Real-time state updates
+- Fully responsive design
 
-## Tools and Technologies
+### 📚 Documentation
+- Comprehensive guides (see [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md))
+- Setup guides for all AI clients
+- In-depth code walkthroughs
+- Architecture explanations
 
-### Core Technologies
+## Prerequisites
 
-1. **TypeScript** (`^5.3.0`)
-   - Type-safe development
-   - Better code maintainability
-   - Compiles to JavaScript
+Before you begin, make sure you have:
+- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- **Git** (optional, for cloning)
 
-2. **Node.js**
-   - Runtime environment
-   - Enables stdio communication
-   - Process management
+**Optional but recommended:**
+- An AI client configured (Claude Desktop, Codex CLI, or Gemini CLI)
+- Basic familiarity with TypeScript/JavaScript
 
-3. **MCP SDK** (`@modelcontextprotocol/sdk ^0.7.0`)
-   - Official MCP SDK for TypeScript
-   - Provides Server, Transport, and Schema types
-   - Handles protocol communication
-
-4. **React & Vite** (for Web UI)
-   - Modern web interface
-   - Hot module replacement
-   - Component-based architecture
-
-### Development Tools
-
-- **tsx** (`^4.20.6`): TypeScript execution for development
-- **TypeScript Compiler**: Builds production-ready JavaScript
-- **Vite** (`^7.1.12`): Fast build tool and dev server
-
-## Project Structure
+## ️ Project Structure
 
 ```
 travel-mcp-server/
@@ -103,427 +82,85 @@ travel-mcp-server/
         └── vite.config.js
 ```
 
-## Creating MCP Tools
+## Getting Started
 
-### Where to Find Tools
+### Step 1: Install Dependencies
 
-**Location**: `index.ts`
+```bash
+# Navigate to project directory
+cd travel-mcp-server
 
-All MCP tools are defined in the `tools` array in `index.ts`. Each tool follows this structure:
-
-```typescript
-const tools: Tool[] = [
-  {
-    name: "tool_name",             // Unique identifier
-    description: "What it does",   // AI sees this description
-    inputSchema: {                 // JSON Schema for validation
-      type: "object" as const,
-      properties: {
-        // Input parameters
-      },
-      required: ["param1", "param2"]
-    }
-  },
-  // ... more tools
-];
+# Install all dependencies
+npm install
 ```
 
-### The 8 Tools We Created
+**What this does:** Installs TypeScript, MCP SDK, React, Vite, and all required packages.
 
-1. **`search_flights`**
-   - Searches flights between cities
-   - Parameters: `departure`, `arrival`, `sortBy` (optional)
+### Step 2: Build the Backend
 
-2. **`get_cheapest_flight`**
-   - Finds cheapest flight for a route
-   - Parameters: `departure`, `arrival`
-
-3. **`book_flight`**
-   - Books a flight ticket
-   - Parameters: `flightId`, `passengerName`, `email`
-
-4. **`get_flight_details`**
-   - Gets detailed flight information
-   - Parameters: `flightId`
-
-5. **`get_booking_details`**
-   - Retrieves booking information
-   - Parameters: `bookingId`
-
-6. **`list_all_bookings`**
-   - Lists all bookings
-   - No parameters required
-
-7. **`cancel_booking`**
-   - Cancels a booking
-   - Parameters: `bookingId`
-
-8. **`send_confirmation_email`**
-   - Sends confirmation email
-   - Parameters: `bookingId`
-
-### Tool Handler Implementation
-
-**Location**: `index.ts`
-
-Each tool has a corresponding handler in the `server.setRequestHandler` function:
-
-```typescript
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-  
-  switch (name) {
-    case "search_flights": {
-      // Handler logic here
-      return { content: [{ type: "text", text: result }] };
-    }
-    // ... other cases
-  }
-});
-
-## API Functions and Business Logic
-
-### Where to Find Functions
-
-**Location**: `database.ts`
-
-This file contains all the business logic functions that the MCP tools call.
-
-### Core Functions
-
-#### 1. Flight Search Functions
-
-```typescript
-// database.ts
-export function searchFlights(
-  departure: string,
-  arrival: string,
-  sortBy: "price" | "duration" | "stops" = "price"
-): Flight[]
+```bash
+# Compile TypeScript to JavaScript
+npm run build
 ```
 
-**What it does:**
-- Filters flights by departure/arrival cities
-- Sorts results by price, duration, or stops
-- Returns matching flights
+**What this does:** Compiles `index.ts` and `database.ts` into `dist/index.js` and `dist/database.js` that AI clients will use.
 
-**Used by**: `search_flights` tool
-
-```typescript
-// database.ts
-export function getCheapestFlight(
-  departure: string,
-  arrival: string
-): Flight | undefined
+**Expected output:**
+```
+✓ Built successfully
 ```
 
-**What it does:**
-- Finds the cheapest flight for a route
-- Returns the first flight (cheapest) or undefined
+### Step 3: Choose Your Setup Path
 
-**Used by**: `get_cheapest_flight` tool
+You have three options (choose what fits your needs):
 
-#### 2. Flight Management
+#### Quick Start: Web App Only
+Perfect for learning and demos - no AI client setup needed!
 
-```typescript
-// database.ts
-export function findFlightById(flightId: string): Flight | undefined
+```bash
+cd web
+npm install
+npm run dev
 ```
 
-**What it does:**
-- Searches the mock flights database
-- Returns flight by ID or undefined
+Opens at `http://localhost:3000` - you're ready to go!
 
-**Used by**: `get_flight_details`, `book_flight` tools
+#### AI Integration: MCP Server Only
+Perfect for AI CLI integration:
 
-#### 3. Booking Functions
+1. **Configure your AI client** (choose one):
+   - **Claude Desktop** → See [PROJECT_WALKTHROUGH.md - Claude Desktop Integration](PROJECT_WALKTHROUGH.md#claude-desktop-integration)
+   - **Gemini CLI** → See [PROJECT_WALKTHROUGH.md - Google Gemini Integration](PROJECT_WALKTHROUGH.md#google-gemini-integration)
+   - **Codex CLI** → See `temp_docs/CODEX_CONFIG.md`
 
-```typescript
-// database.ts
-export function bookFlight(
-  flightId: string,
-  passengerName: string,
-  email: string
-): Booking | null
+2. **Test it:**
+   - Open your AI client
+   - Try: "Search for flights from New York to Los Angeles"
+
+#### Full Stack: Both Web App + MCP Server
+Perfect for complete demonstrations:
+
+**Terminal 1: MCP Server**
+```bash
+npm start
 ```
 
-**What it does:**
-- Validates flight exists and has available seats
-- Creates a new booking record
-- Decrements available seats count
-- Stores booking in database
-- Returns booking object or null if failed
-
-**Used by**: `book_flight` tool
-
-**State Management**: This function **modifies** the flight's `availableSeats` property, demonstrating state persistence.
-
-```typescript
-// database.ts
-export function getBookingById(bookingId: string): Booking | undefined
+**Terminal 2: Web App**
+```bash
+cd web
+npm install
+npm run dev
 ```
 
-**What it does:**
-- Finds booking by ID in the bookings database
+**Terminal 3: AI Client**
+- Open Claude Desktop, Codex CLI, or Gemini CLI
+- Both web UI and AI client see the same data!
 
-**Used by**: `get_booking_details`, `send_confirmation_email` tools
+> 💡 **Tip:** For detailed setup instructions, see [PROJECT_WALKTHROUGH.md - Integrating with AI Clients](PROJECT_WALKTHROUGH.md#integrating-with-ai-clients)
 
-```typescript
-// database.ts
-export function getAllBookings(): Booking[]
-```
+## Understanding the Project
 
-**What it does:**
-- Returns all bookings from the database
-
-**Used by**: `list_all_bookings` tool
-
-```typescript
-// database.ts
-export function cancelBooking(bookingId: string): boolean
-```
-
-**What it does:**
-- Finds the booking
-- Releases the seat back (increments `availableSeats`)
-- Marks booking as "cancelled"
-- Returns true if successful
-
-**Used by**: `cancel_booking` tool
-
-**State Management**: This function **restores** the seat, demonstrating state mutation.
-
-### Data Structures
-
-**Location**: `database.ts`
-
-```typescript
-export interface Flight {
-  id: string;
-  airline: string;
-  departure: string;
-  arrival: string;
-  departureTime: string;
-  arrivalTime: string;
-  duration: string;
-  price: number;
-  availableSeats: number;
-  stops: number;
-}
-
-export interface Booking {
-  id: string;
-  flightId: string;
-  passengerName: string;
-  email: string;
-  bookingDate: string;
-  status: "confirmed" | "pending" | "cancelled";
-}
-```
-
-## Linking Functions Together
-
-### The Connection Flow
-
-```
-AI Client Request
-    ↓
-MCP Protocol (index.ts)
-    ↓
-Tool Handler (switch statement)
-    ↓
-Business Logic Function (database.ts)
-    ↓
-Data Operations (mockFlights, bookingsDatabase)
-    ↓
-Response Formatted
-    ↓
-Returned to AI Client
-```
-
-### Example: Booking a Flight
-
-**Step 1**: AI calls `book_flight` tool
-```typescript
-// index.ts
-case "book_flight": {
-  const { flightId, passengerName, email } = args;
-  const booking = bookFlight(flightId, passengerName, email);
-  // ... formatting and response
-}
-```
-
-**Step 2**: Handler calls business function
-```typescript
-// database.ts
-export function bookFlight(...) {
-  const flight = findFlightById(flightId);  // Links to another function
-  // ... validation and booking creation
-  flight.availableSeats--;  // Mutates state
-  bookingsDatabase.push(booking);  // Stores data
-}
-```
-
-**Step 3**: Function uses helper functions
-```typescript
-// database.ts
-export function findFlightById(flightId: string) {
-  return mockFlights.find(f => f.id === flightId);
-}
-```
-
-### Function Dependencies Map
-
-```
-bookFlight()
-  ├── findFlightById()      [Dependency]
-  └── Mutates: flight.availableSeats
-  └── Stores: bookingsDatabase
-
-cancelBooking()
-  ├── getBookingById()        [Dependency]
-  ├── findFlightById()       [Dependency]
-  └── Mutates: flight.availableSeats
-
-getCheapestFlight()
-  └── searchFlights()        [Dependency]
-      └── Uses: mockFlights
-```
-
-## MCP with Stdio Implementation
-
-### What is Stdio?
-
-**Stdio** (Standard Input/Output) is a communication method where:
-- AI client sends requests via **stdin** (standard input)
-- Server responds via **stdout** (standard output)
-- Errors/logs go to **stderr** (standard error)
-
-This allows direct process-to-process communication without HTTP servers.
-
-### Implementation Steps
-
-#### Step 1: Import Required Modules
-
-**Location**: `index.ts`
-
-```typescript
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { 
-  Tool, 
-  CallToolRequestSchema, 
-  ListToolsRequestSchema 
-} from "@modelcontextprotocol/sdk/types.js";
-```
-
-**What each import does:**
-- `Server`: Main MCP server class
-- `StdioServerTransport`: Handles stdin/stdout communication
-- `Tool`, `CallToolRequestSchema`, `ListToolsRequestSchema`: Type definitions and schemas
-
-#### Step 2: Create Server Instance
-
-**Location**: `index.ts`
-
-```typescript
-const server = new Server(
-  {
-    name: "travel-mcp-server",
-    version: "1.0.0",
-  },
-  {
-    capabilities: {
-      tools: {},  // Indicates we provide tools
-    },
-  }
-);
-```
-
-**Server Configuration:**
-- `name`: Server identifier
-- `version`: Version string
-- `capabilities.tools`: Tells clients we provide MCP tools
-
-#### Step 3: Define Tools Array
-
-**Location**: `index.ts`
-
-```typescript
-const tools: Tool[] = [
-  // ... 8 tool definitions
-];
-```
-
-This array is what clients see when they call `tools/list`.
-
-#### Step 4: Register Tool Handler
-
-**Location**: `index.ts`
-
-```typescript
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-  
-  try {
-    switch (name) {
-      case "search_flights": { /* ... */ }
-      case "book_flight": { /* ... */ }
-      // ... other cases
-    }
-  } catch (error) {
-    // Error handling
-  }
-});
-```
-
-**What this does:**
-- Registers a handler for tool call requests
-- `CallToolRequestSchema`: Validates incoming requests
-- Switch statement routes to appropriate handler
-
-#### Step 5: Register Tools List Handler
-
-**Location**: `index.ts`
-
-```typescript
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools,
-}));
-```
-
-**What this does:**
-- Responds to `tools/list` requests
-- Returns the `tools` array so clients know what tools are available
-
-#### Step 6: Create Stdio Transport and Connect
-
-**Location**: `index.ts`
-
-```typescript
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Travel MCP Server started successfully!");
-}
-
-main().catch(console.error);
-```
-
-**What this does:**
-1. Creates `StdioServerTransport` instance
-   - Handles stdin/stdout communication
-   - Processes incoming JSON-RPC messages
-   
-2. Connects server to transport
-   - Server starts listening for requests
-   - Ready to receive tool calls via stdin
-
-3. Error logging uses `console.error` (stderr)
-   - Doesn't interfere with stdout responses
-   - Visible in logs but not in protocol communication
-
-### How Stdio Communication Works
+### How It Works
 
 ```
 ┌─────────────┐         stdin          ┌───────────────┐
@@ -538,182 +175,141 @@ main().catch(console.error);
                                         └─────────────┘
 ```
 
-**Message Flow:**
-1. Client sends JSON-RPC request via stdin
-2. Server parses request using `CallToolRequestSchema`
-3. Server routes to appropriate handler
-4. Handler calls `database.ts` functions
-5. Server formats response
-6. Response sent via stdout
-7. Client receives and processes response
+**The Flow:**
+1. AI client sends request via stdin
+2. MCP server processes request
+3. Calls business logic functions
+4. Returns formatted response via stdout
 
-# Integrating with AI Clients
+> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - MCP with Stdio Implementation](PROJECT_WALKTHROUGH.md#mcp-with-stdio-implementation) for detailed explanation
 
-## Integration Overview
+### Key Concepts
 
-To use this MCP server with AI clients, you need to:
-1. Build the server (compile TypeScript)
-2. Get the absolute path to compiled `index.js`
-3. Configure the AI client's config file
-4. Restart the AI client
+- **MCP Tools**: 8 tools that AI clients can call (search, book, cancel, etc.)
+- **State Persistence**: Bookings and seat availability persist across sessions
+- **Business Logic**: All logic in `database.ts`, tools in `index.ts`
+- **Mock Data**: JSON files in `data/` directory
 
-## Claude Desktop Integration
+> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - Creating MCP Tools](PROJECT_WALKTHROUGH.md#creating-mcp-tools) for how tools work
 
-### Step 1: Build the Server
 
-```bash
-cd /path/to/travel-mcp-server
-npm install
-npm run build
-```
+## Web App Features
 
-This creates `dist/index.js` - the compiled server.
+### ✈️ Flight Search
+- Search flights by departure/arrival cities
+- Quick demo button for NYC → LAX
+- Results sorted by price
+- Real-time availability
 
-### Step 2: Find Configuration File
+### 📋 Flight Display
+- Beautiful flight cards with airline branding
+- Shows airline, times, duration, stops, price
+- Availability indicator (seats remaining)
+- Quick "Book Now" button
 
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-**Linux**: `~/.config/Claude/claude_desktop_config.json`
+### 🎫 Booking System
+- Passenger name & email form
+- Input validation
+- Real-time availability update
+- Instant booking confirmation
 
-### Step 3: Add Server Configuration
+### 📧 Email Confirmations
+- Mock email preview modal
+- Shows complete booking details
+- Professional email template
+- Dismissable modal
 
-Open the config file and add:
+### 📊 Booking Management
+- View all bookings in one place
+- Cancel anytime
+- Seat automatically released on cancel
+- Real-time updates across all views
 
-```json
-{
-  "mcpServers": {
-    "travel": {
-      "command": "node",
-      "args": ["/absolute/path/to/travel-mcp-server/dist/index.js"]
-    }
-  }
-}
-```
+### Beautiful Design
+- Modern gradient headers
+- Responsive cards
+- Smooth animations
+- Color-coded status (confirmed/pending/cancelled)
+- Mobile-friendly responsive design
 
-**Important**: Use absolute path, not relative!
+## State Persistence Demo
 
-**Example (macOS)**:
-```json
-{
-  "mcpServers": {
-    "travel": {
-      "command": "node",
-      "args": ["/Users/john/projects/travel-mcp-server/dist/index.js"]
-    }
-  }
-}
-```
+This is the **key teaching moment** - demonstrating real backend state management!
 
-### Step 4: Restart Claude Desktop
-
-Close and reopen Claude Desktop. The server should appear in the tools panel.
-
-### Step 5: Verify Integration
-
-In Claude Desktop, you should see "Travel" or "travel-mcp-server" in the tools/skills section.
-
-### Usage in Claude
-
-Once integrated, you can ask Claude:
+### Try This Flow:
 
 ```
-"Search for flights from New York to Los Angeles"
-"What's the cheapest flight?"
-"Book flight FL001 for John Doe at john@example.com"
-"Show me all my bookings"
-"Cancel booking BK1234567890"
+1. Search flights
+   → FL004 shows 22 seats available
+
+2. Book FL004
+   → Backend decreases availability
+   → FL004 now has 21 seats
+
+3. Search again
+   → FL004 still shows 21 seats
+   → Change persisted! ✅
+
+4. Cancel the booking
+   → FL004 back to 22 seats
+   → Seat released! ✅
 ```
 
-## Google Gemini Integration
+### What This Demonstrates:
 
-### Step 1: Build the Server
+✅ **Real backend state** - Not just frontend state  
+✅ **Mutations and updates** - Data actually changes  
+✅ **Data consistency** - Same data across all views  
+✅ **Business logic execution** - Rules enforced server-side
 
-```bash
-cd /path/to/travel-mcp-server
-npm install
-npm run build
-```
+> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - API Functions and Business Logic](PROJECT_WALKTHROUGH.md#api-functions-and-business-logic) to understand how state management works
 
-### Step 2: Find Configuration File
+---
 
-**macOS/Linux**: `~/.config/gemini/config.json` or `~/.gemini/config.json`
-**Windows**: `%USERPROFILE%\.config\gemini\config.json`
+## Next Steps
 
-### Step 3: Add Server Configuration
+### 🎓 Learn More
 
-Create or edit the config file:
+- **[PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md)** - Complete documentation with:
+  - How MCP tools are created
+  - Business logic implementation
+  - Function dependencies
+  - Stdio communication details
+  - Full AI client integration guides
 
-```json
-{
-  "mcp_servers": {
-    "travel": {
-      "command": "node",
-      "args": ["/absolute/path/to/travel-mcp-server/dist/index.js"]
-    }
-  }
-}
-```
+### 🔧 Explore the Code
 
-**Or via environment variable:**
-```bash
-export GEMINI_MCP_SERVERS='travel:node /path/to/travel-mcp-server/dist/index.js'
-```
+- **`index.ts`** - MCP server and tool definitions
+- **`database.ts`** - Business logic and data management
+- **`src/`** - React components for the web app
 
-### Step 4: Initialize Gemini CLI (if needed)
+### 🐛 Troubleshooting
 
-```bash
-gemini init
-```
+**Web app won't start?**
+- Check Node.js version: `node --version` (need v18+)
+- Delete `node_modules` and `package-lock.json`, then `npm install`
 
-### Step 5: Start Session
+**MCP server not working?**
+- See [PROJECT_WALKTHROUGH.md - Testing the Integration](PROJECT_WALKTHROUGH.md#testing-the-integration)
+- Check that `dist/index.js` exists after `npm run build`
+- Verify AI client configuration path is absolute
 
-```bash
-gemini
-```
+**Need help?**
+- Check [PROJECT_WALKTHROUGH.md - Troubleshooting](PROJECT_WALKTHROUGH.md#troubleshooting) section
+- Review AI client configuration guides in PROJECT_WALKTHROUGH.md
 
-### Usage in Gemini
+---
 
-Once connected, interact naturally:
+## Quick Reference
 
-```
-> Search for flights from New York to Los Angeles
-> Find the cheapest option
-> Book flight FL001 for Jane Smith jane@example.com
-> Show me my booking confirmation
-```
+| Task | Command |
+|------|---------|
+| Install dependencies | `npm install` |
+| Build backend | `npm run build` |
+| Start MCP server | `npm start` |
+| Run web app | `cd web && npm run dev` |
+| View docs | Open [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md) |
 
-## Testing the Integration
+---
 
-### Manual Testing
-
-1. **Start the server manually** (optional):
-   ```bash
-   npm start
-   # or
-   node dist/index.js
-   ```
-
-2. **Check server is running**:
-   - You should see: "Travel MCP Server started successfully!" in stderr
-   - Server waits for stdin input
-
-3. **Test with AI client**:
-   - Open Claude Desktop or Gemini CLI
-   - Try a simple command: "Search for flights from NYC to LAX"
-   - Verify the tool executes and returns results
-
-### Troubleshooting
-
-**Problem**: Server not appearing in tools
-- **Solution**: Check file path is absolute and correct
-- **Solution**: Ensure `dist/index.js` exists after build
-- **Solution**: Restart AI client completely
-
-**Problem**: "Permission denied" errors
-- **Solution**: Make sure `node` is in PATH
-- **Solution**: Check file permissions on `dist/index.js`
-
-**Problem**: Tools not executing
-- **Solution**: Check server logs in stderr
-- **Solution**: Verify JSON config syntax is correct
-- **Solution**: Ensure all dependencies are installed
+**Ready to dive deeper?** → [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md) has everything you need!
