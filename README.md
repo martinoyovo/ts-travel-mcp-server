@@ -7,13 +7,13 @@
 
 A **complete full-stack travel booking application** with:
 
-### 🎯 Backend (MCP Server)
+### Backend (MCP Server)
 - TypeScript MCP server with 8 tools
 - Mock flight database with real-time state
 - Booking system with state persistence
 - Multi-client support (Claude, Codex, Gemini)
 
-### 🎨 Frontend (Web App)
+### Frontend (Web App)
 - Beautiful React UI with modern design
 - Flight search interface
 - Booking management dashboard
@@ -21,7 +21,7 @@ A **complete full-stack travel booking application** with:
 - Real-time state updates
 - Fully responsive design
 
-### 📚 Documentation
+### Documentation
 - Comprehensive guides (see [PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md))
 - Setup guides for all AI clients
 - In-depth code walkthroughs
@@ -156,7 +156,7 @@ npm run dev
 - Open Claude Desktop, Codex CLI, or Gemini CLI
 - Both web UI and AI client see the same data!
 
-> 💡 **Tip:** For detailed setup instructions, see [PROJECT_WALKTHROUGH.md - Integrating with AI Clients](PROJECT_WALKTHROUGH.md#integrating-with-ai-clients)
+> **Tip:** For detailed setup instructions, see [PROJECT_WALKTHROUGH.md - Integrating with AI Clients](PROJECT_WALKTHROUGH.md#integrating-with-ai-clients)
 
 ## Understanding the Project
 
@@ -181,7 +181,7 @@ npm run dev
 3. Calls business logic functions
 4. Returns formatted response via stdout
 
-> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - MCP with Stdio Implementation](PROJECT_WALKTHROUGH.md#mcp-with-stdio-implementation) for detailed explanation
+> **Learn more:** See [PROJECT_WALKTHROUGH.md - MCP with Stdio Implementation](PROJECT_WALKTHROUGH.md#mcp-with-stdio-implementation) for detailed explanation
 
 ### Key Concepts
 
@@ -190,36 +190,36 @@ npm run dev
 - **Business Logic**: All logic in `database.ts`, tools in `index.ts`
 - **Mock Data**: JSON files in `data/` directory
 
-> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - Creating MCP Tools](PROJECT_WALKTHROUGH.md#creating-mcp-tools) for how tools work
+> **Learn more:** See [PROJECT_WALKTHROUGH.md - Creating MCP Tools](PROJECT_WALKTHROUGH.md#creating-mcp-tools) for how tools work
 
 
 ## Web App Features
 
-### ✈️ Flight Search
+### Flight Search
 - Search flights by departure/arrival cities
 - Quick demo button for NYC → LAX
 - Results sorted by price
 - Real-time availability
 
-### 📋 Flight Display
+### Flight Display
 - Beautiful flight cards with airline branding
 - Shows airline, times, duration, stops, price
 - Availability indicator (seats remaining)
 - Quick "Book Now" button
 
-### 🎫 Booking System
+### Booking System
 - Passenger name & email form
 - Input validation
 - Real-time availability update
 - Instant booking confirmation
 
-### 📧 Email Confirmations
+### Email Confirmations
 - Mock email preview modal
 - Shows complete booking details
 - Professional email template
 - Dismissable modal
 
-### 📊 Booking Management
+### Booking Management
 - View all bookings in one place
 - Cancel anytime
 - Seat automatically released on cancel
@@ -248,27 +248,27 @@ This is the **key teaching moment** - demonstrating real backend state managemen
 
 3. Search again
    → FL004 still shows 21 seats
-   → Change persisted! ✅
+   → Change persisted!
 
 4. Cancel the booking
    → FL004 back to 22 seats
-   → Seat released! ✅
+   → Seat released!
 ```
 
 ### What This Demonstrates:
 
-✅ **Real backend state** - Not just frontend state  
-✅ **Mutations and updates** - Data actually changes  
-✅ **Data consistency** - Same data across all views  
-✅ **Business logic execution** - Rules enforced server-side
+- **Real backend state** - Not just frontend state  
+- **Mutations and updates** - Data actually changes  
+- **Data consistency** - Same data across all views  
+- **Business logic execution** - Rules enforced server-side
 
-> 📖 **Learn more:** See [PROJECT_WALKTHROUGH.md - API Functions and Business Logic](PROJECT_WALKTHROUGH.md#api-functions-and-business-logic) to understand how state management works
+> **Learn more:** See [PROJECT_WALKTHROUGH.md - API Functions and Business Logic](PROJECT_WALKTHROUGH.md#api-functions-and-business-logic) to understand how state management works
 
 ---
 
 ## Next Steps
 
-### 🎓 Learn More
+### Learn More
 
 - **[PROJECT_WALKTHROUGH.md](PROJECT_WALKTHROUGH.md)** - Complete documentation with:
   - How MCP tools are created
@@ -277,13 +277,13 @@ This is the **key teaching moment** - demonstrating real backend state managemen
   - Stdio communication details
   - Full AI client integration guides
 
-### 🔧 Explore the Code
+### Explore the Code
 
 - **`index.ts`** - MCP server and tool definitions
 - **`database.ts`** - Business logic and data management
 - **`src/`** - React components for the web app
 
-### 🐛 Troubleshooting
+### Troubleshooting
 
 **Web app won't start?**
 - Check Node.js version: `node --version` (need v18+)
